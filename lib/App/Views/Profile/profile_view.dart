@@ -35,19 +35,18 @@ class _ProfileViewState extends State<ProfileView> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                textDefault(conn.email.value, blackDoff, 1, FontWeight.normal),
                 profileUser(size),
                 SizedBox(
                   height: 5,
                 ),
-                (conn.birtdayT.text == "" &&
-                        conn.horoscopeT.text == "" &&
-                        conn.zodiacT.text == "" &&
-                        conn.heightT.text == "" &&
-                        conn.weightT.text == "")
-                    ? widdNodata(size)
-                    : conn.boolTapEdit.value
-                        ? widEdit(size)
+                conn.boolTapEdit.value
+                    ? widEdit(size)
+                    : (conn.birtdayT.text == "" &&
+                            conn.horoscopeT.text == "" &&
+                            conn.zodiacT.text == "" &&
+                            conn.heightT.text == "" &&
+                            conn.weightT.text == "")
+                        ? widdNodata(size)
                         : widdData(size),
                 SizedBox(
                   height: 20,
@@ -91,8 +90,8 @@ class _ProfileViewState extends State<ProfileView> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
                               ),
                               itemCount: conn.interest.length,
                               physics: BouncingScrollPhysics(),
@@ -552,30 +551,19 @@ class _ProfileViewState extends State<ProfileView> {
                 width: 30,
               ),
               Container(
-                width: size.width / 2,
-                padding: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(5)),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  controller: conn.horoscopeT,
-                  style: TextStyle(
-                      fontFamily: 'poppins', fontSize: 14, color: Colors.white),
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    // conn.onChange(value);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "---",
-                      hintStyle: TextStyle(
-                          fontFamily: 'poppins',
-                          color: Colors.grey,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal)),
-                ),
-              ),
+                  width: size.width / 2,
+                  padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(
+                    conn.getZodiacSign(conn.selectTanggal.value),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        fontFamily: 'poppins',
+                        fontSize: 14,
+                        color: Colors.white),
+                  )),
             ],
           ),
           SizedBox(

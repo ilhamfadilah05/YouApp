@@ -35,6 +35,11 @@ class InterestController extends GetxController {
     addInterestList.remove(e);
   }
 
+  void getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    addInterestList.value = jsonDecode(prefs.getString('interestUser')!);
+  }
+
   void saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String encodeInterest = jsonEncode(addInterestList);

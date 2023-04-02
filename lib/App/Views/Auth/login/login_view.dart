@@ -39,7 +39,9 @@ class _LoginViewState extends State<LoginView> {
               height: 20,
             ),
             conn.boolBtnLogin.value
-                ? buttonAuthActive(context, "Login")
+                ? InkWell(
+                    onTap: () => conn.apiLogin(),
+                    child: buttonAuthActive(context, "Login"))
                 : buttonAuthDeactive(context, "Login"),
             SizedBox(
               height: 70,

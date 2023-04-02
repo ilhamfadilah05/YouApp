@@ -16,6 +16,7 @@ class ProfileController extends GetxController {
   final heightT = TextEditingController();
   final weightT = TextEditingController();
   var base64Foto = "".obs;
+  var selectTanggal = DateTime.now().obs;
 
   var email = "".obs;
   var gender = "Male".obs;
@@ -31,7 +32,7 @@ class ProfileController extends GetxController {
   void getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     usernameT.text = prefs.getString("nameUser")!;
-    email.value = prefs.getString("emailUser")!;
+
     base64Foto.value = prefs.getString("potoUser")!;
     birtdayT.text = prefs.getString("birthdayUser")!;
     gender.value = prefs.getString("genderUser")!;
@@ -40,6 +41,7 @@ class ProfileController extends GetxController {
     heightT.text = prefs.getString("heightUser")!;
     weightT.text = prefs.getString("weightUser")!;
     interest.value = jsonDecode(prefs.getString("interestUser")!);
+    email.value = prefs.getString("emailUser")!;
     print(interest);
   }
 
@@ -55,6 +57,8 @@ class ProfileController extends GetxController {
         lastDate: DateTime(2017));
     if (picked != null) {
       birtdayT.text = DateFormat("dd MM yyyy").format(picked).toString();
+      selectTanggal.value = picked;
+      getZodiacSign(picked);
     }
   }
 
@@ -75,12 +79,50 @@ class ProfileController extends GetxController {
     prefs.setString('nameUser', usernameT.text);
     prefs.setString('genderUser', gender.value);
     prefs.setString('birthdayUser', birtdayT.text);
-    prefs.setString('horoscopeUser', horoscopeT.text);
+    prefs.setString('horoscopeUser', getZodiacSign(selectTanggal.value));
     prefs.setString('zodiacUser', zodiacT.text);
     prefs.setString('heightUser', heightT.text);
     prefs.setString('weightUser', weightT.text);
     prefs.setString('potoUser', base64Foto.value);
     boolTapEdit.value = false;
     Get.offAll(ProfileView());
+  }
+
+  String getZodiacSign(DateTime birthdate) {
+    const List<String> signNames = [
+      "Capricorn",
+      "Aquarius",
+      "Pisces",
+      "Aries",
+      "Taurus",
+      "Gemini",
+      "Cancer",
+      "Leo",
+      "Virgo",
+      "Libra",
+      "Scorpio",
+      "Sagittarius",
+      "Capricorn"
+    ];
+    const List<int> signDays = [
+      0,
+      22,
+      20,
+      21,
+      21,
+      22,
+      23,
+      23,
+      23,
+      23,
+      23,
+      22,
+      22
+    ];
+
+    if (birthdate.day < signDays[birthdate.month])
+      return signNames[birthdate.month - 1];
+    else
+      return signNames[birthdate.month];
   }
 }

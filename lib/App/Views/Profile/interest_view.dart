@@ -17,6 +17,13 @@ class InterestView extends StatefulWidget {
 
 class _InterestViewState extends State<InterestView> {
   final conn = Get.put(InterestController());
+
+  @override
+  void initState() {
+    conn.getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
