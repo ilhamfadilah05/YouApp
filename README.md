@@ -1,6 +1,6 @@
 # youapp_itv_test
 
-A new Flutter project.
+Project Aplikasi CRUD, dengan local storage
 
 ## Getting Started
 
